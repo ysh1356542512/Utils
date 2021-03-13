@@ -24,9 +24,6 @@ public class httputil {
     private static ExecutorService executor;
     private static Handler mHandler;
 
-
-
-
     //设置线程池模式 最多有5个线程
     private httputil() {
         if (executor == null) {
@@ -360,10 +357,10 @@ public class httputil {
 
 
     private static void postSuccessString(final StringCallback callback, final String result) {
-        mHandler.post(new Runnable() {   //新线程来传输message
+        mHandler.post(new Runnable() {   //将result传回主线程，回到主线程之中，可以对这个数据进行任何处理
             @Override
-            public void run() {
-                callback.onSuccess(result);//回到onSuccess接口
+            public void run() {     
+                callback.onSuccess(result);//用onSuccess接口让使用者决定对数据的处理
             }
         });
     }
@@ -372,7 +369,7 @@ public class httputil {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                BitmapCallback bitmapCallback = (BitmapCallback) callback;
+                BitmapCallback bitmapCallback = (BitmapCallback) callback;  //与postSuccessString同理
                 bitmapCallback.onSuccess(bitmap);
             }
         });
@@ -407,7 +404,7 @@ public class httputil {
         });
     }
 
-
+    //将字节转化为字符串
     private static String inputStream2String(InputStream inputStream) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] bytes = new byte[1024];
@@ -463,7 +460,7 @@ public class httputil {
         return result;
     }
 
-    
+    //判断是否联网
     public static boolean isNetWorkConnected(Context context) {
 
         ConnectivityManager manager = (ConnectivityManager)
@@ -476,6 +473,8 @@ public class httputil {
         return false;
     }
 
+    
+    //接口 当传递成功或失败时
     public interface Callback {
         void onFailure(int code, Exception e);
     }
