@@ -282,7 +282,8 @@ public class httputil {
         });
     }
 
-
+    //这个就是专门用来处理复杂类的 比如我最近在学用Pixabay做画廊 而Pixabay里的字段有很多属性 比如hits，title 所以我现在只需要在项目中新建一个Pixabay类 然后将Pixabay.class传进去 这样就可以得到
+    //然后在onSucess里处理数据 这可能就是建造者模式的产生的复杂类 然后方便传入参数 我是这样理解的 不知道对不对
     public <T> void doHttpRequest(final String method, final String url,
                                          final Map<String, String> params, final Class<T> cls, final ObjectCallback callback) {
         executor.execute(new Runnable() {
