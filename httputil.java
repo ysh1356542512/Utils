@@ -124,7 +124,7 @@ public class httputil {
     }
 
     //返回图片
-    public String doHttpRequest(final String method, final String url,
+    public void doHttpRequest(final String method, final String url,
                                        final Map<String, String> params, final BitmapCallback callback) {
 
         executor.execute(new Runnable() {
@@ -208,7 +208,6 @@ public class httputil {
                 }
             }
         });
-        return null;
     }
 
     //返回byte[]
